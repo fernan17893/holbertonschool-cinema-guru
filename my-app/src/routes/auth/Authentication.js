@@ -2,40 +2,89 @@ import React, { useState }from "react";
 import './auth.css';
 import Login from "./Login.js";
 import Register from "./Register.js";
+import axios from "axios";
 
 
 function Authentication({ setIsLoggedIn, setUserUsername }) {
     const [_switch, setSwitch] = useState('true');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const handleSwitch = (value) => {
+        setSwitch(value);
+        setPassword('');
+        setUsername('');
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (_switch) {
+            axios.post('http://localhost:8001/api/auth/login', {
+                username,
+                password,
+            } )
+            .then((response) => {
+                if (response.data.accessToken) {
+                localStorage.setItem('accessToken', response.data.accessToken);
+                setUserUsername(response.data.username);
+                setIsLoggedIn(true);
+                }
+            })
+            .catch((error) => {
+                // Handle error
+            });
+        } else {
+            axios.post('http://localhost:8001/api/auth/register', {
+                username,
+                password,
+            })
+            .then((response) => {
+                if (response.data.accessToken) {
+                localStorage.setItem('accessToken', response.data.accessToken);
+                setUserUsername(response.data.username);
+                setIsLoggedIn(true);
+                }
+            })
+            .catch((error) => {
+                // Handle error
+            });
+        }
+    }
     return (
         <div className="auth">
-        <h1>Auth</h1>
-        <form>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-            />
-            <div className="buttons">
-                <button type="button" onClick={setSwitch(true)}>Login</button>
-                <button type="button" onClick={setSwitch(false)}>Sign Up</button>
-            </div>
-        </form>
-        {
-            _switch ?
-            <Login username={username} password={password} setUsername={setUsername} setPassword={setPassword} /> :
-            <Register username={username} password={password} setUsername={setUsername} setPassword={setPassword} />
-        }
-        </div>
-    );
-    }
+      <form className="authentication" onSubmit={handleSubmit}>
+        <ul>
+          <li
+            onClick={() => handleSwitch(true)}
+            className={_switch ? "active" : ""}
+          >
+            Sign in
+          </li>
+          <li
+            onClick={() => handleSwitch(false)}
+            className={!_switch ? "active" : ""}
+          >
+            Sign up
+          </li>
+        </ul>
+        {_switch ? (
+          <Login
+            username={username}
+            setUsername={setUsername}
+            password={password}
+            setPassword={setPassword}
+          />
+        ) : (
+          <Register
+            username={username}
+            setUsername={setUsername}
+            password={password}
+            setPassword={setPassword}
+          />
+        )}
+      </form>
+    </div>
+  );
+}
 
 export default Authentication;
