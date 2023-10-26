@@ -1,28 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import './auth.css';
+import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
+import Input from "../../components/general/Input";
+import Button from "../../components/general/Button";
 
 
-function Login(username, password, setUsername, setPassword) {
+
+const Login = ({ username, setUsername, password, setPassword }) => {
     return (
-        <div className="login">
-      <h1>Login</h1>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <input
+        <div className="loginpage">
+      <h1>Sign in with your account</h1>
+        <Input
           type="text"
-          placeholder="Username"
+          icon={faUser}
+          label="Username:"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          className="input username"
+          setValue={setUsername}
         />
-        <input
+        <Input
           type="password"
-          placeholder="Password"
+          icon={faKey}
+          label={"Password: "}
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          className="input password"
+          setValue={setPassword}
         />
-        <button type="submit">Submit</button>
-      </form>
+        <Button text="Sign In" className="button" icon={faKey} type="submit" />
     </div>
     );
-    }
+    };
 
 export default Login;

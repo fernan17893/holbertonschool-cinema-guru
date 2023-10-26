@@ -6,42 +6,39 @@ import axios from "axios";
 
 
 function Authentication({ setIsLoggedIn, setUserUsername }) {
-    const [_switch, setSwitch] = useState('true');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [_switch, setSwitch] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSwitch = (value) => {
         setSwitch(value);
-        setPassword('');
-        setUsername('');
+        setUsername("");
+        setPassword("");
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if (_switch) {
-            axios.post('http://localhost:8001/api/auth/login', {
+            axios.post('http://localhost:8000/api/auth/login', {
                 username,
                 password,
-            } )
+            })
             .then((response) => {
                 if (response.data.accessToken) {
                 localStorage.setItem('accessToken', response.data.accessToken);
-                setUserUsername(response.data.username);
+                setUserUsername(username);
                 setIsLoggedIn(true);
                 }
-            })
-            .catch((error) => {
-                // Handle error
             });
         } else {
-            axios.post('http://localhost:8001/api/auth/register', {
+            axios.post('http://localhost:8000/api/auth/register', {
                 username,
                 password,
             })
             .then((response) => {
                 if (response.data.accessToken) {
                 localStorage.setItem('accessToken', response.data.accessToken);
-                setUserUsername(response.data.username);
+                setUserUsername(username);
                 setIsLoggedIn(true);
                 }
             })
