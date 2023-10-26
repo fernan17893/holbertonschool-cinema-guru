@@ -1,25 +1,24 @@
-import React from 'react';
-import general from './general.css';
+import React, { useState } from "react";
+import "./general.css";
 
-export default function SelectInput({
+const SelectInput = ({
   label,
   options,
+  multiple,
   className,
   value,
   setValue,
-}) {
+}) => {
   const handleSelect = (event) => {
     setValue(event.target.value);
   };
 
+  [value, setValue] = useState("");
+
   return (
-    <div className={general.selectInput}>
-      <label htmlFor={label}>{label}</label>
-      <select
-        className={className}
-        value={value}
-        onChange={handleSelect}
-      >
+    <div className={className}>
+      <label>{label}</label>
+      <select value={value} onChange={handleSelect} multiple={multiple}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -28,4 +27,6 @@ export default function SelectInput({
       </select>
     </div>
   );
-}
+};
+
+export default SelectInput;
