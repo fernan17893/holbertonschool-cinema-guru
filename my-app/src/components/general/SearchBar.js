@@ -1,16 +1,16 @@
 import React from 'react';
-import general from './general.css';
+import './general.css';
 
-export default function SearchBar({
+const SearchBar = ({
   title,
-  setTitle,
-}) {
+  setTitle
+}) => {
   const handleInput = (event) => {
     setTitle(event.target.value);
   };
 
   return (
-    <div className={general.searchBar}>
+    <div>
       <input
         type="text"
         placeholder="Search..."
@@ -20,3 +20,5 @@ export default function SearchBar({
     </div>
   );
 }
+
+export default SearchBar;

@@ -9,7 +9,7 @@
 }
 
 .dashboard,
-.personal-moovies {
+.fave-movies {
   background-color: #222222;
 }
 
@@ -27,12 +27,12 @@
   padding-left: 9.375rem;
 }
 
-.fav {
+.fave {
   color: white;
   text-align: center;
 }
 
-.fav h1 {
+.fave h1 {
   font-weight: 400;
   font-size: 5rem;
   text-decoration: underline;

@@ -8,7 +8,7 @@ import { faFolder } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
-export default function SideBar() {
+const SideBar = () => {
         const [selected, setSelected] = useState("home");
         const [activities, setActivities] = useState([]);
         const [showActivities, setShowActivities] = useState(false);
@@ -72,5 +72,4 @@ export default function SideBar() {
       }
       
     
-
-
+export default SideBar;
